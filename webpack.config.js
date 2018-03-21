@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: {
-    app: "./src/app/index.jsx"
+    app: "./src/index.jsx"
   },
   devtool: "inline-source-map",
   devServer: {
@@ -108,8 +108,8 @@ module.exports = {
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: "index.ejs",
-      favicon: "favicon.ico",
+      template: "src/index.ejs",
+      favicon: "src/favicon.ico",
       inject: "body"
     })
   ],
