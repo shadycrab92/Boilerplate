@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
-import global from "./globalReducer";
 import { routerReducer } from "react-router-redux";
+
+import global from "src/reducers/globalReducer";
+
 
 const rootReducer = combineReducers({
   global,

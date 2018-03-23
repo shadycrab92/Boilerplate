@@ -1,13 +1,13 @@
 import React from "react";
 
-const NotFoundPage = () => {
+const PublicationPage = () => {
   return (
     <div className="container">
-      <div className="notFoundPage">
+      <div className="publicationPage">
         Publication
       </div>
     </div>
   );
 };
 
-export default NotFoundPage;
+export default PublicationPage;

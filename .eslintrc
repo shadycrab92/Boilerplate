@@ -5,9 +5,14 @@
       "node": true,
       "browser": true
     },
+    "settings": {
+      "import/resolver": "webpack"
+    },
     "rules": {
       "quotes": ["error", "double"],
       "linebreak-style": ["error", "windows"],
-      "global-require": 0
+      "global-require": 0,
+      "import/extensions": 0,
+      "import/first": 0
     }
 }

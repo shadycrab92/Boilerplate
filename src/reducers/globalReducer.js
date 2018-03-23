@@ -1,4 +1,4 @@
-import {EXAMPLE_ACTION} from "../constants/actionTypes";
+import {EXAMPLE_ACTION} from "src/constants/actionTypes";
 
 export default function fuelSavingsReducer(state = initialState, action) {
   let newState = JSON.parse(JSON.stringify(state));
