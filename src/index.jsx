@@ -1,4 +1,4 @@
-import "src/styles/bulma/bulma.sass";
+import "src/styles/all.sass";
 import "src/favicon.ico";
 
 import React from "react";
