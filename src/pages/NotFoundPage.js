@@ -4,7 +4,7 @@ const NotFoundPage = () => {
   return (
     <div className="container">
       <div className="notFoundPage">
-        Publication
+        Not Found
       </div>
     </div>
   );

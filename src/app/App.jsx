@@ -4,12 +4,14 @@ import { Switch, Route } from "react-router-dom";
 
 import NotFoundPage from "src/pages/NotFoundPage";
 import PublicationPage from "src/pages/PublicationPage";
+import PublicationsPage from "src/pages/PublicationsPage";
 
 class App extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/" component={PublicationPage} />
+        <Route exact path="/" component={PublicationsPage}/>
+        <Route path="/p" component={PublicationPage}/>
         <Route component={NotFoundPage} />
       </Switch>
     );
