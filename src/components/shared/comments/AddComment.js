@@ -20,7 +20,7 @@ const AddComment = () => {
                 </div>
                 <div className="level">
                   <span className="comment__send">
-                     <a className="button is-info is-fullwidth">Отправить</a>
+                     <a className="button is-primary is-fullwidth">Отправить</a>
                   </span>
                 </div>
               </div>

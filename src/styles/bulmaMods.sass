@@ -9,8 +9,12 @@
 .media
   width: 100%
 
-.textarea
+.textarea, .input
   box-shadow: none !important
+
+.button
+  &+.button
+    margin-left: 0.5rem
 
 .navbar
   background-color: transparent
@@ -22,7 +26,7 @@
       margin-left: 0
 
       &:hover, &.is-active
-        color: $gray
+        color: $white--alt
 
     .navbar-menu
       margin-right: 0
@@ -65,7 +69,7 @@
         text-transform: uppercase
 
         &:hover
-          color: $gray
+          color: $white--alt
 
       img
         max-height: none

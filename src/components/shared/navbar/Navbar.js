@@ -1,6 +1,8 @@
 import React from "react";
 import "./navbar.sass";
 
+import LoginPopup from "./LoginPopup"
+
 const Navbar = () => {
   return (
     <nav className="navbar" role="navigation">
@@ -33,6 +35,9 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      {
+        false && <LoginPopup/>
+      }
     </nav>
   );
 };
