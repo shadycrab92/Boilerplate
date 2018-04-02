@@ -15,17 +15,17 @@ const Publication = () => {
           </p>
           <p className="publication__paragraph">
             <span className="publication__blockButtons">
-              <a className="button">
+              <a className="button is-primary is-outlined">
                 <span className="icon is-small">
                   <i className="fas fa-edit"></i>
                 </span>
               </a>
-              <a className="button">
+              <a className="button is-primary is-outlined">
                 <span className="icon is-small">
                   <i className="fas fa-chevron-up"></i>
                 </span>
               </a>
-              <a className="button">
+              <a className="button is-primary is-outlined">
                 <span className="icon is-small">
                   <i className="fas fa-chevron-down"></i>
                 </span>

@@ -8,6 +8,7 @@ const Navbar = () => {
     <nav className="navbar" role="navigation">
       <div className="container">
         <div className="navbar__content">
+
           <div className="navbar-brand">
             <a className="navbar-item" href="https://bulma.io">
               <figure className="image is-32x32">

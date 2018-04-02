@@ -1,2 +1,11 @@
 //Global Actions
 export const EXAMPLE_ACTION = "EXAMPLE_ACTION";
+
+//Publication Actions
+export const Publication = {
+  GET: "PUBLICATION.GET",
+  GET_SUCCESS: "PUBLICATION.GET_SUCCESS",
+  GET_FAILED: "PUBLICATION.GET_FAILED",
+
+  SET_PAGE: "PUBLICATION.SET_PAGE"
+};

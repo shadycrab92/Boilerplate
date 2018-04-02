@@ -12,7 +12,13 @@ module.exports = {
     compress: true,
     historyApiFallback: true,
     port: 3000,
-    hot: true
+    hot: true,
+    proxy: {
+      "/api/": {
+        target: "https://localhost:44389/",
+        secure: false
+      }
+    }
   },
   module: {
     rules: [

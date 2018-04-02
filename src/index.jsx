@@ -3,10 +3,12 @@ import "src/favicon.ico";
 
 import React from "react";
 import { render } from "react-dom";
+import moment from "moment";
 import configureStore, { history } from "./store/configureStore";
 
 import Root from "src/app/Root";
 
+moment.locale("ru");
 
 const store = configureStore();
 

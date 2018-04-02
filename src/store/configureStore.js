@@ -1,6 +1,7 @@
 import {createStore, compose, applyMiddleware} from "redux";
 import reduxImmutableStateInvariant from "redux-immutable-state-invariant";
 import thunk from "redux-thunk";
+import logger from "redux-logger";
 import createHistory from "history/createBrowserHistory";
 import { routerMiddleware } from "react-router-redux";
 
@@ -26,7 +27,8 @@ function configureStoreDev(initialState) {
   const middlewares = [
     reduxImmutableStateInvariant(),
     thunk,
-    reactRouterMiddleware,
+    logger,
+    reactRouterMiddleware
   ];
 
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
