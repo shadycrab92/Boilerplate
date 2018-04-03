@@ -4,7 +4,7 @@ import "./comments.sass";
 import Comment from "src/components/shared/comments/Comment"
 import AddComment from "src/components/shared/comments/AddComment"
 
-const Comments = () => {
+const Comments = (props) => {
   return (
     <section className="comments">
       <div className="container">
@@ -13,15 +13,19 @@ const Comments = () => {
           <div className="comments__item comments__item--add">
             <AddComment/>
           </div>
-          <div className="comments__item">
-            <Comment/>
-          </div>
-          <div className="comments__item">
-            <Comment/>
-          </div>
-          <div className="comments__item">
-            <Comment/>
-          </div>
+
+          {
+            props.comments.map((el, i)=>{
+              return (
+                <div key={i} className="comments__item">
+                  <Comment
+                    userName={el.userName}
+                    text={el.text}
+                  />
+                </div>
+              );
+            })
+          }
         </div>
       </div>
     </section>

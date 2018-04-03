@@ -11,7 +11,7 @@ class App extends React.Component {
     return (
       <Switch>
         <Route exact path="/" component={PublicationsPage}/>
-        <Route path="/p" component={PublicationPage}/>
+        <Route path="/p/:id" component={PublicationPage}/>
         <Route component={NotFoundPage} />
       </Switch>
     );

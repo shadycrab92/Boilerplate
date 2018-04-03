@@ -34,7 +34,7 @@ export class PublicationsPage extends Component {
   loadPublications(){
     const publicationReducer = this.props.publication;
 
-    this.props.publicationActions.get_publications("", publicationReducer.order, publicationReducer.page, publicationReducer.search);
+    this.props.publicationActions.get_list("", publicationReducer.order, publicationReducer.page, publicationReducer.search);
   }
 
   setPublicationsPage(page){

@@ -24,6 +24,7 @@ export default class Publications extends Component {
             this.props.publications.map((el, i)=>{
               return <PublicationItem
                 key={i}
+                id={el.id}
                 title={el.title}
                 text={el.previewText}
                 image={el.previewImage}

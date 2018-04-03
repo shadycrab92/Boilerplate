@@ -1,7 +1,7 @@
 import React from "react";
 import "./comment.sass";
 
-const Comment = () => {
+const Comment = (props) => {
   return (
     <div className="comment">
         <div className="comment__content">
@@ -14,9 +14,9 @@ const Comment = () => {
             <div className="media-content">
               <div className="content">
                 <div className="comment__text">
-                  <strong>John Smith</strong> <span className="comment__date">18.04.2018 в 12:15</span>
+                  <strong>{props.userName}</strong> <span className="comment__date">18.04.2018 в 12:15</span>
                   <br/>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+                  {props.text}
                 </div>
                 <p>
                    <span className="comment__stat comment__stat--like">

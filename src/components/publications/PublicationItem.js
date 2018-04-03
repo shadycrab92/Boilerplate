@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import {dateFormatting} from "src/utils/_all"
 
@@ -6,7 +7,11 @@ const PublicationItem = (props) => {
   return (
     <article className="publicationsItem">
       <div className="publicationsItem__content">
-        <h1 className="publicationsItem__title">{props.title}</h1>
+        <h1 className="publicationsItem__title">
+          <Link to={`/p/${props.id}`}>
+            {props.title}
+          </Link>
+        </h1>
         <p className="publicationsItem__date">
           {dateFormatting.friendlyFormat(props.created)}
         </p>
@@ -35,12 +40,12 @@ const PublicationItem = (props) => {
                  </span>
                   <span>Получить доступ</span>
                 </a> :
-                <a className="button is-primary is-outlined">
+                <Link className="button is-primary is-outlined" to={`/p/${props.id}`}>
                   <span className="icon">
                     <i className="fas fa-chevron-right"></i>
                   </span>
                   <span>Читать дальше</span>
-                </a>
+                </Link>
              }
           </span>
 
