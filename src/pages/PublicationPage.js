@@ -40,12 +40,14 @@ export class PublicationPage extends Component {
       setCommentsPage: this.setCommentsPage
     };
 
+    const publicationProps = {... publicationReducer.one};
+
 
     return (
       <section className="publicationPage">
         <Navbar/>
         <Dashboard/>
-        <Publication/>
+        <Publication {... publicationProps}/>
         <Comments {... commentsProps}/>
       </section>
     );
