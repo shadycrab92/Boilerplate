@@ -1,6 +1,11 @@
+@import "./bulma/utilities/initial-variables"
 @import "./colors"
 
 //src\styles\bulma\components\navbar.sass:200
+
+$primary: $pink
+
+@import "./bulma/bulma"
 
 .container
   width: 1024px !important
@@ -13,8 +18,15 @@
   box-shadow: none !important
 
 .button
+  font-weight: normal
+  font-size: 1rem
+
   &+.button
     margin-left: 0.5rem
+
+  &.is-medium
+    font-size: 1.1rem
+    height: 3rem
 
   .icon
     font-size: 12px
@@ -46,17 +58,17 @@
 
       &--subscribe
         font-size: 12px
-        color: $red
+        color: $pink
         padding: 16px 0 14px 0
 
         &:hover
-          color: $red--alt
+          color: $pink--alt
 
           &>span
-            border-color: $red--alt
+            border-color: $pink--alt
 
         &>span
-          border: 1px solid $red
+          border: 1px solid $pink
           border-radius: 3px
           padding: 2px
 

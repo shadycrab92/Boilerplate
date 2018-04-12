@@ -7,8 +7,8 @@ import PublicationYoutubePopup from "./PublicationYoutubePopup";
 import Text from "./blocks/Text";
 import Image from "./blocks/Image";
 
-
 import {dateFormatting} from "src/utils/_all"
+
 
 const Publication = (props) => {
   return (
