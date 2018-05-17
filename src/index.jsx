@@ -1,4 +1,4 @@
-import "src/styles/all.sass";
+import "src/styles/global.sass";
 import "src/favicon.ico";
 
 import React from "react";

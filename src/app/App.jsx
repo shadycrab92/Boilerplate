@@ -3,15 +3,13 @@ import PropTypes from "prop-types";
 import { Switch, Route } from "react-router-dom";
 
 import NotFoundPage from "src/pages/NotFoundPage";
-import PublicationPage from "src/pages/PublicationPage";
-import PublicationsPage from "src/pages/PublicationsPage";
+import HomePage from "src/pages/HomePage";
 
 class App extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/" component={PublicationsPage}/>
-        <Route path="/p/:id" component={PublicationPage}/>
+        <Route exact path="/" component={HomePage}/>
         <Route component={NotFoundPage} />
       </Switch>
     );
