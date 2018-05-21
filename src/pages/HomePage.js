@@ -6,6 +6,7 @@ import {bindActionCreators} from "redux";
 import * as globalActions from "src/actions/globalActions";
 
 import Header from "src/components/home/header/Header";
+import Catalog from "src/components/home/catalog/Catalog";
 
 export class HomePage extends Component {
   constructor(){
@@ -17,6 +18,7 @@ export class HomePage extends Component {
       <section className="homePage">
         <div className="container">
           <Header/>
+          <Catalog/>
         </div>
       </section>
     );
