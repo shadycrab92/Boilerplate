@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600&subset=cyrillic")
-@import url('https://fonts.googleapis.com/css?family=Roboto:900')
+@import url('https://fonts.googleapis.com/css?family=Roboto:500')
 
 @import "./bulma/bulma"
 @import "./colors"
@@ -8,12 +8,24 @@ html, body
   font-family: "Open Sans", sans-serif
   font-size: 14px
   min-width: 400px
-  background-color: $black-smooth
 
 a
   color: $white
   &:hover
     color: $white
+
+.leftSide
+  position: fixed
+  top: 0
+  bottom: 0
+  width: 400px
+  background-color: $black-smooth
+
+.rightSide
+  margin-left: 400px
+
+
+
 
 //Bulma
 .container

@@ -1,0 +1,58 @@
+{
+  "MainBuilding": {
+    "width": 4,
+    "height": 4,
+    "stats": {
+      "1": {
+        "maxHealth": 2000,
+        "maxArmor": 1000,
+        "productivity": 1
+      }
+    },
+    "availableProducts": ["Concrete", "Wall", "Turret", "Barracks"]
+  },
+  "Concrete": {
+    "width": 1,
+    "height": 1,
+    "stats": {
+      "1": {
+        "maxHealth": 100,
+        "maxArmor": 50
+      }
+    }
+  },
+  "Wall": {
+    "width": 1,
+    "height": 1,
+    "stats": {
+      "1": {
+        "maxHealth": 300,
+        "maxArmor": 500
+      }
+    }
+  },
+  "Turret": {
+    "width": 2,
+    "height": 2,
+    "stats": {
+      "1": {
+        "maxHealth": 700,
+        "maxArmor": 300,
+        "rangePower": 10,
+        "range": 5
+      }
+    }
+  },
+  "Barracks": {
+    "width": 2,
+    "height": 4,
+    "stats": {
+      "1": {
+        "maxHealth": 500,
+        "maxArmor": 100,
+        "productivity": 1
+      }
+    },
+    "availableProducts": ["Rebel", "Trooper", "RocketTrooper", "Engineer", "Assassin"]
+  }
+}

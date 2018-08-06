@@ -1,0 +1,36 @@
+{
+  "buildings": {
+    "MainBuilding": {
+      "remainingProgress": 2000
+    },
+    "Concrete": {
+      "remainingProgress": 25
+    },
+    "Wall": {
+      "remainingProgress": 50
+    },
+    "Turret": {
+      "remainingProgress": 250
+    },
+    "Barracks": {
+      "remainingProgress": 500
+    }
+  },
+  "units": {
+    "Rebel": {
+      "remainingProgress": 20
+    },
+    "Trooper": {
+      "remainingProgress": 50
+    },
+    "RocketTrooper": {
+      "remainingProgress": 75
+    },
+    "Defender": {
+      "remainingProgress": 125
+    },
+    "Assassin": {
+      "remainingProgress": 250
+    }
+  }
+}

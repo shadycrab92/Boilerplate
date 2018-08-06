@@ -5,8 +5,7 @@ import {bindActionCreators} from "redux";
 
 import * as globalActions from "src/actions/globalActions";
 
-import Header from "src/components/home/header/Header";
-import Catalog from "src/components/home/catalog/Catalog";
+import Field from "src/components/home/field/Field";
 
 export class HomePage extends Component {
   constructor(){
@@ -17,8 +16,7 @@ export class HomePage extends Component {
     return (
       <section className="homePage">
         <div className="container">
-          <Header/>
-          <Catalog/>
+          <Field/>
         </div>
       </section>
     );

@@ -1,0 +1,71 @@
+{
+  "Rebel": {
+    "width": 1,
+    "height": 1,
+    "stats": {
+      "1": {
+        "maxHealth": 5,
+        "regenHealth": 1,
+        "maxArmor": 1,
+        "meleePower": 2,
+        "range": 1
+      }
+    }
+  },
+  "Trooper": {
+    "width": 1,
+    "height": 1,
+    "stats": {
+      "1": {
+        "MaxHealth": 10,
+        "RegenHealth": 1,
+        "MaxArmor": 2,
+        "MeleePower": 3,
+        "RangePower": 2,
+        "Range": 3
+      }
+    }
+  },
+  "RocketTrooper": {
+    "width": 1,
+    "height": 1,
+    "stats": {
+      "1": {
+        "maxHealth": 10,
+        "regenHealth": 1,
+        "maxArmor": 2,
+        "meleePower": 1,
+        "rangePower": 4,
+        "range": 4,
+        "splash": 1
+      }
+    }
+  },
+  "Defender": {
+    "width": 1,
+    "height": 1,
+    "stats": {
+      "1": {
+        "maxHealth": 15,
+        "regenHealth": 2,
+        "maxArmor": 20,
+        "meleePower": 2,
+        "range": 1
+      }
+    }
+  },
+  "Assassin": {
+    "width": 1,
+    "height": 1,
+    "stats": {
+      "1": {
+        "maxHealth": 15,
+        "regenHealth": 1,
+        "maxArmor": 5,
+        "meleePower": 6,
+        "rangePower": 3,
+        "range": 2
+      }
+    }
+  }
+}

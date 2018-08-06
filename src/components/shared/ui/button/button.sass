@@ -1,0 +1,25 @@
+@import "styles/colors"
+@import "styles/variables"
+
+.button
+  height: 2.5em
+  border: none
+  border-radius: 2px
+
+  &.is-medium
+    font-size: 1rem
+    height: $gap--xl
+    padding-left: $gap
+    padding-right: $gap
+
+
+  &.is-transparent
+    color: $white
+    background: transparent
+
+    &:hover
+      color: $white-t
+
+    &.active
+      color: $white
+      box-shadow: inset 0px -3px 0 $yellow
