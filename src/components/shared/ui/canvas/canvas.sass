@@ -2,8 +2,20 @@
 @import "styles/variables"
 
 .canvas
-  &__main
-    border: 1px solid black
+  &--background,
+  &--objects,
+  &--interface
+    position: absolute
+    left: 0
+    top: 0
+    z-index: 0
+    width: 600px
+    height: 600px
+
+  &__visible
+    position: absolute
+    left: 0
+    top: 0
 
   &__buffer
     display: none

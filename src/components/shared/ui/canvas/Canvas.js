@@ -7,130 +7,182 @@ import sand from "src/static/sand.png";
 export default class Canvas extends Component {
   constructor(){
     super();
-    this.canvas = null;
-    this.context = null;
-
-    this.bufferingCanvas = null;
-    this.bufferingContext = null;
-
-    this.viewport = {
-      x: 0,
-      y: 0,
-      startX: 0,
-      startY: 0,
-      startMouseX: null,
-      startMouseY: null
+    this.layers = {
+      background: {canvas: null, context: null, bufferCanvas: null, bufferContext: null, lastUpdateState: null},
+      objects: {canvas: null, context: null, bufferCanvas: null, bufferContext: null, lastUpdateState: null},
+      interface: {canvas: null, context: null, bufferCanvas: null, bufferContext: null, lastUpdateState: null}
     };
 
-    this.backgroundImg = null;
+    this.field = {width: 2500, height: 2500};
+    this.canvas = {width: 600, height: 600};
+    this.viewport = {x: 0, y: 0, inversedX:0, inversedY: 0, startX: 0, startY: 0, startMouseX: null, startMouseY: null, zoom: 1};
+
+    this.tiles = {
+      background: {src: sand, image: null},
+    };
 
     this.startMovingViewport = ::this.startMovingViewport;
     this.movingViewport = ::this.movingViewport;
     this.endMovingViewport = ::this.endMovingViewport;
-
     this.draw = ::this.draw;
 
-    setInterval(()=>{
-      this.draw();
-    }, 20);
+    this.initTiles = ::this.initTiles;
+    this.initLayers = ::this.initLayers;
+    this.getDrawArea = ::this.getDrawArea;
+    this.coordinateInArea = ::this.coordinateInArea;
+    this.addEvent = ::this.addEvent;
+    this.removeEvent = ::this.removeEvent;
   }
 
   componentDidMount(){
-    this.canvas = document.getElementById("canvasMain");
-    this.canvas.width = 600;
-    this.canvas.height = 600;
-    this.context = this.canvas.getContext("2d");
+    this.initLayers();
+    this.initTiles();
+    this.draw();
 
-    this.bufferCanvas = document.getElementById("canvasBuffer");
-    this.bufferCanvas.width = 600;
-    this.bufferCanvas.height = 600;
-    this.bufferContext = this.bufferCanvas.getContext("2d");
-
-    this.loadBackground();
-
-    this.canvas.addEventListener("mousedown", this.startMovingViewport);
+    this.addEvent("mousedown", this.startMovingViewport);
   }
 
-  loadBackground(){
-    let background = new Image();
-    background.onload = () => {
-      this.backgroundImg = background;
-    };
-    background.src = sand;
+  initTiles(){
+    for (const key of Object.keys(this.tiles)) {
+      let obj = this.tiles[key];
+
+      let img = new Image();
+      img.onload = () => {
+        obj.image = img;
+      };
+      img.src = obj.src;
+    }
+  }
+
+  initLayers(){
+    for (const key of Object.keys(this.layers)) {
+      let obj = this.layers[key];
+
+      obj.canvas = document.getElementById(key);
+      obj.canvas.width = this.canvas.width;
+      obj.canvas.height = this.canvas.height;
+      obj.context = obj.canvas.getContext("2d");
+
+      obj.bufferCanvas = document.getElementById(`${key}_buffer`);
+      obj.bufferCanvas.width = this.canvas.width;
+      obj.bufferCanvas.height = this.canvas.height;
+      obj.bufferContext = obj.bufferCanvas.getContext("2d");
+    }
+  }
+
+  addEvent(name, callback){
+    this.layers.interface.canvas.addEventListener(name, callback);
+  }
+
+  removeEvent(name, callback){
+    this.layers.interface.canvas.removeEventListener(name, callback);
   }
 
   startMovingViewport(e){
-    this.viewport.startX = this.viewport.x;
-    this.viewport.startY = this.viewport.y;
+    this.viewport.startX = this.viewport.inversedX;
+    this.viewport.startY = this.viewport.inversedY;
     this.viewport.startMouseX = e.offsetX;
     this.viewport.startMouseY = e.offsetY;
 
-    this.canvas.addEventListener("mouseup", this.endMovingViewport);
-    this.canvas.addEventListener("mousemove", this.movingViewport);
+    this.addEvent("mouseup", this.endMovingViewport);
+    this.addEvent("mouseout", this.endMovingViewport);
+    this.addEvent("mousemove", this.movingViewport);
   }
 
   movingViewport(e){
     const difX = this.viewport.startMouseX - e.offsetX;
     const difY = this.viewport.startMouseY - e.offsetY;
-    this.viewport.x = this.viewport.startX - difX;
-    this.viewport.y = this.viewport.startY - difY;
+    const maxX = this.field.width - this.canvas.width;
+    const maxY = this.field.height - this.canvas.height;
+
+    let newX = -(this.viewport.startX - difX);
+    let newY = -(this.viewport.startY - difY);
+
+    newX = newX < 0 ? 0 : newX > maxX ? maxX : newX;
+    newY = newY < 0 ? 0 : newY > maxY ? maxY : newY;
+
+    this.viewport.x = newX;
+    this.viewport.inversedX = -newX;
+
+    this.viewport.y = newY;
+    this.viewport.inversedY = -newY;
   }
+
 
   endMovingViewport(e){
-    this.canvas.removeEventListener("mouseup", this.endMovingViewport);
-    this.canvas.removeEventListener("mousemove", this.movingViewport);
+    this.removeEvent("mouseup", this.endMovingViewport);
+    this.removeEvent("mouseout", this.endMovingViewport);
+    this.removeEvent("mousemove", this.movingViewport);
   }
 
-  toDataURL(src, callback, outputFormat) {
-    let img = new Image();
-    img.crossOrigin = 'Anonymous';
-    img.onload = function() {
-      let canvas = document.createElement("canvas");
-      let ctx = canvas.getContext("2d");
-      let dataURL;
-      canvas.height = this.naturalHeight;
-      canvas.width = this.naturalWidth;
-      ctx.drawImage(this, 0, 0);
-      dataURL = canvas.toDataURL(outputFormat);
-      callback(dataURL);
-    };
-    img.src = src;
-    if (img.complete || img.complete === undefined) {
-      img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-      img.src = src;
+  getDrawArea(){
+    const offsetX = this.canvas.width/3;
+    const offsetY = this.canvas.height/3;
+
+    const startX = this.viewport.x - offsetX;
+    const startY = this.viewport.y - offsetY;
+    const endX = this.viewport.x + this.canvas.width + offsetX;
+    const endY = this.viewport.y + this.canvas.height + offsetY;
+
+    return {
+      startX: startX,
+      startY: startY,
+      endX: endX,
+      endY: endY
     }
   }
 
-  drawBackground(){
-    if(this.backgroundImg){
-      for(let i=0; i < 2500; i+=300){
-        for(let j=0; j < 2500; j+=300){
-          this.bufferContext.drawImage(this.backgroundImg, i, j);
-        }
-      }
-    }
+  coordinateInArea(x, y, area){
+    return x > area.startX && x < area.endX && y > area.startY && y < area.endY;
   }
 
   draw(){
-    this.bufferContext.clearRect(0, 0, 2500, 2500);
-    this.bufferContext.setTransform(1, 0, 0, 1, 0, 0);
-    this.bufferContext.translate(this.viewport.x, this.viewport.y);
-
     this.drawBackground();
-    const sourceImageData = this.bufferCanvas.toDataURL("image/png");
-    const image = new Image();
-    image.onload = () => {
-      this.context.clearRect(0, 0, 2500, 2500);
-      this.context.drawImage(image, 0, 0);
-    };
-    image.src = sourceImageData;
+
+    requestAnimationFrame(this.draw);
+  }
+
+  drawBackground(){
+    const backgroundLayer = this.layers.background;
+    const tile = this.tiles.background;
+
+    const currentUpdateState = JSON.stringify({
+      viewportX: this.viewport.inversedX,
+      viewportY: this.viewport.inversedY,
+      viewportZoom: this.viewport.zoom
+    });
+
+    if(backgroundLayer.lastUpdateState != currentUpdateState && tile.image){
+      const drawArea = this.getDrawArea();
+      backgroundLayer.bufferContext.setTransform(1, 0, 0, 1, 0, 0);
+      backgroundLayer.bufferContext.translate(this.viewport.inversedX, this.viewport.inversedY);
+      backgroundLayer.bufferContext.scale(this.viewport.zoom, this.viewport.zoom);
+
+      for(let i= 0; i < this.field.width; i+=100){
+        for(let j= 0; j < this.field.height; j+=100){
+          if(this.coordinateInArea(i, j, drawArea)){
+            backgroundLayer.bufferContext.drawImage(tile.image, i, j);
+          }
+        }
+      }
+
+      backgroundLayer.lastUpdateState = currentUpdateState;
+      backgroundLayer.context.drawImage(backgroundLayer.bufferCanvas, 0, 0);
+      backgroundLayer.bufferContext.clearRect(0, 0, this.field.width, this.field.height);
+    }
   }
 
   render() {
     return (
       <div className="canvas">
-        <canvas id="canvasMain" className="canvas__main"/>
-        <canvas id="canvasBuffer" className="canvas__buffer"/>
+        {
+          Object.keys(this.layers).map(key =>
+            <div key={key} className={`canvas--${key}`}>
+              <canvas id={key} className="canvas__visible"/>
+              <canvas id={`${key}_buffer`} className="canvas__buffer"/>
+            </div>
+          )
+        }
       </div>
     );
   }
