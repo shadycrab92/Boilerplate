@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import "./canvas.sass";
 
-
-import sand from "src/static/sand.png";
+import TileManager from "src/utils/TileManager";
 
 export default class Canvas extends Component {
-  constructor(){
+  constructor() {
     super();
     this.layers = {
       background: {canvas: null, context: null, bufferCanvas: null, bufferContext: null, lastUpdateState: null},
@@ -13,12 +12,18 @@ export default class Canvas extends Component {
       interface: {canvas: null, context: null, bufferCanvas: null, bufferContext: null, lastUpdateState: null}
     };
 
-    this.field = {width: 2500, height: 2500};
+    this.field = {width: 2500, height: 2500, bgTileSize: 100};
     this.canvas = {width: 600, height: 600};
-    this.viewport = {x: 0, y: 0, inversedX:0, inversedY: 0, startX: 0, startY: 0, startMouseX: null, startMouseY: null, zoom: 1};
-
-    this.tiles = {
-      background: {src: sand, image: null},
+    this.viewport = {
+      x: 0,
+      y: 0,
+      inversedX: 0,
+      inversedY: 0,
+      startX: 0,
+      startY: 0,
+      startMouseX: null,
+      startMouseY: null,
+      zoom: 1
     };
 
     this.startMovingViewport = ::this.startMovingViewport;
@@ -26,32 +31,19 @@ export default class Canvas extends Component {
     this.endMovingViewport = ::this.endMovingViewport;
     this.draw = ::this.draw;
 
-    this.initTiles = ::this.initTiles;
-    this.initLayers = ::this.initLayers;
     this.getDrawArea = ::this.getDrawArea;
     this.coordinateInArea = ::this.coordinateInArea;
     this.addEvent = ::this.addEvent;
     this.removeEvent = ::this.removeEvent;
+
+    this.tileManager = new TileManager();
   }
 
   componentDidMount(){
     this.initLayers();
-    this.initTiles();
     this.draw();
 
     this.addEvent("mousedown", this.startMovingViewport);
-  }
-
-  initTiles(){
-    for (const key of Object.keys(this.tiles)) {
-      let obj = this.tiles[key];
-
-      let img = new Image();
-      img.onload = () => {
-        obj.image = img;
-      };
-      img.src = obj.src;
-    }
   }
 
   initLayers(){
@@ -137,38 +129,42 @@ export default class Canvas extends Component {
   }
 
   draw(){
-    this.drawBackground();
+    if(this.tileManager.isReady){
+      this.drawBackground();
+    }
 
     requestAnimationFrame(this.draw);
   }
 
   drawBackground(){
     const backgroundLayer = this.layers.background;
-    const tile = this.tiles.background;
-
     const currentUpdateState = JSON.stringify({
       viewportX: this.viewport.inversedX,
       viewportY: this.viewport.inversedY,
       viewportZoom: this.viewport.zoom
     });
 
-    if(backgroundLayer.lastUpdateState != currentUpdateState && tile.image){
+    if(backgroundLayer.lastUpdateState != currentUpdateState){
       const drawArea = this.getDrawArea();
-      backgroundLayer.bufferContext.setTransform(1, 0, 0, 1, 0, 0);
-      backgroundLayer.bufferContext.translate(this.viewport.inversedX, this.viewport.inversedY);
-      backgroundLayer.bufferContext.scale(this.viewport.zoom, this.viewport.zoom);
+      const context = backgroundLayer.context;
+      const bufferContext = backgroundLayer.bufferContext;
+      const tileSize = this.field.bgTileSize;
 
-      for(let i= 0; i < this.field.width; i+=100){
-        for(let j= 0; j < this.field.height; j+=100){
+      bufferContext.setTransform(1, 0, 0, 1, 0, 0);
+      bufferContext.translate(this.viewport.inversedX, this.viewport.inversedY);
+
+      for(let i= 0; i < this.field.width; i+= tileSize){
+        for(let j= 0; j < this.field.height; j+= tileSize){
           if(this.coordinateInArea(i, j, drawArea)){
-            backgroundLayer.bufferContext.drawImage(tile.image, i, j);
+            this.tileManager.renderTile("sand", bufferContext, i, j, tileSize, tileSize)
           }
         }
       }
 
       backgroundLayer.lastUpdateState = currentUpdateState;
-      backgroundLayer.context.drawImage(backgroundLayer.bufferCanvas, 0, 0);
-      backgroundLayer.bufferContext.clearRect(0, 0, this.field.width, this.field.height);
+      context.clearRect(0, 0, this.field.width, this.field.width);
+      context.drawImage(backgroundLayer.bufferCanvas, 0, 0);
+      bufferContext.clearRect(0, 0, this.field.width, this.field.width);
     }
   }
 
